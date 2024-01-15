@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 //Define input pins
-#define PUSH1          RPI_GPIO_P1_08     //GPIO14
-#define PUSH2          RPI_V2_GPIO_P1_38  //GPIO20
+#define PUSH1          RPI_GPIO_P1_08     //GPIO14 (right button)
+#define PUSH2          RPI_V2_GPIO_P1_38  //GPIO20 (left button)
 #define TOGGLE_SWITCH  RPI_V2_GPIO_P1_32  //GPIO12
 #define FOOT_SWITCH    RPI_GPIO_P1_10     //GPIO15
 #define LED            RPI_V2_GPIO_P1_36  //GPIO16
@@ -81,8 +81,8 @@ int main(int argc, char **argv) {
             FOOT_SWITCH_val = bcm2835_gpio_lev(FOOT_SWITCH);
             //Light the effect when the footswitch is activated
             //bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
-            bcm2835_gpio_write(LED, !PUSH1_val);
-            //bcm2835_gpio_write(LED, !PUSH2_val);
+            //bcm2835_gpio_write(LED, !PUSH1_val);
+            bcm2835_gpio_write(LED, !PUSH2_val);
             //bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
 
             printf("\nThis is the end of the if statement\n\n");
