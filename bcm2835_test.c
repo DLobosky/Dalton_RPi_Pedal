@@ -88,19 +88,19 @@ int main(int argc, char **argv) {
 
             if (PUSH2_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !PUSH2_val);
+                bcm2835_gpio_write(LED, !LED);
             }
             else if (PUSH1_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !PUSH1_val);
+                bcm2835_gpio_write(LED, !LED);
             }
             else if (TOGGLE_SWITCH_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
+                bcm2835_gpio_write(LED, !LED);
             }
             else if (FOOT_SWITCH_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
+                bcm2835_gpio_write(LED, !LED);
             }
 
             printf("\nThis is the end of the if statement\n\n");
