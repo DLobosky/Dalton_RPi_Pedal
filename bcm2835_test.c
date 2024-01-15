@@ -1,5 +1,6 @@
 #include <bcm2835.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 //Define input pins
 #define PUSH1          RPI_GPIO_P1_08     //GPIO14 (right button)
@@ -12,6 +13,8 @@ uint32_t read_timer = 0;
 uint32_t input_signal = 0;
 uint32_t output_signal = 0;
 uint32_t booster_value = 2047;
+
+bool led_flipper = false;
 
 uint8_t FOOT_SWITCH_val;
 uint8_t TOGGLE_SWITCH_val;
@@ -86,21 +89,36 @@ int main(int argc, char **argv) {
             //bcm2835_gpio_write(LED, !PUSH2_val);
             //bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
 
+
+
             if (PUSH2_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !LED);
+                if(!led_flipper){
+                    bcm2835_gpio_write(LED, !PUSH2_val);
+                    led_flipper=true;
+                } else if(led_flipper){
+                    bcm2835_gpio_write(LED, PUSH2_val);
+                    led_flipper=false;
+                }
+                
             }
             else if (PUSH1_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !LED);
+                if(!led_flipper){
+                    bcm2835_gpio_write(LED, !PUSH1_val);
+                    led_flipper=true;
+                } else if(led_flipper){
+                    bcm2835_gpio_write(LED, PUSH1_val);
+                    led_flipper=false;
+                }
             }
             else if (TOGGLE_SWITCH_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !LED);
+                bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
             }
             else if (FOOT_SWITCH_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !LED);
+                bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
             }
 
             printf("\nThis is the end of the if statement\n\n");
