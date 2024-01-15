@@ -19,6 +19,7 @@ uint8_t PUSH1_val;
 uint8_t PUSH2_val;
 
 int main(int argc, char **argv) {
+    printf("\nThis is the start of the program\n\n");
     //Start the BCM2835 library to access GPIO
     if (!bcm2835_init()) {
         printf("bcm2835_init failed. Are you running as root ?\n");
@@ -62,6 +63,9 @@ int main(int argc, char **argv) {
     bcm2835_gpio_set_pud(FOOT_SWITCH, BCM2835_GPIO_PUD_UP);    //FOOT_SWITCH pull-up enabled
 
     while(1) {  //Main Loop
+
+        printf("\nThis is the start of the while loop\n\n");
+
         //Read 12 bits ADC
         bcm2835_spi_transfernb(mosi, miso, 3);
         input_signal = miso[2] + ((miso[1] & 0x0F) << 8);
@@ -69,6 +73,7 @@ int main(int argc, char **argv) {
         //Read the PUSH buttons every 50000 times (0.25s) to save resources
         read_timer++;
         if (read_timer == 5000) {
+            printf("\nThis is the start of the if statement\n\n");
             read_timer = 0;
             PUSH1_val = bcm2835_gpio_lev(PUSH1);
             PUSH2_val = bcm2835_gpio_lev(PUSH2);
@@ -86,6 +91,7 @@ int main(int argc, char **argv) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
                 if (booster_value > 500) booster_value = booster_value - 500;
             }
+            printf("\nThis is the end of the if statement\n\n");
         }
 
         //*** BOOSTER EFFECT ***//
@@ -96,10 +102,14 @@ int main(int argc, char **argv) {
         //Generate output PWM signal 6 bits
         bcm2835_pwm_set_data(1, output_signal & 0x3F);
         bcm2835_pwm_set_data(0, output_signal >> 6);
+
+        printf("\nThis is the end of the while loop\n\n");
     }
 
+    printf("\nThis is where all the bcm stuff closes and exits.\n\n");
     //Close all and exit
     bcm2835_spi_end();
     bcm2835_close();
+    printf("\nThis is the end of the program\n\n");
     return 0;
 }
