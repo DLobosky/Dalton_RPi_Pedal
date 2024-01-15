@@ -81,6 +81,9 @@ int main(int argc, char **argv) {
             FOOT_SWITCH_val = bcm2835_gpio_lev(FOOT_SWITCH);
             //Light the effect when the footswitch is activated
             bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
+            bcm2835_gpio_write(LED, !PUSH1_val);
+            bcm2835_gpio_write(LED, !PUSH2_val);
+            bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
 
             //Update booster_value when the PUSH1 or 2 buttons are pushed
             if (PUSH2_val == 0) {
