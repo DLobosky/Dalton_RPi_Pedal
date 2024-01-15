@@ -114,11 +114,23 @@ int main(int argc, char **argv) {
             }
             else if (TOGGLE_SWITCH_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
+                if(!led_flipper){
+                    bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
+                    led_flipper=true;
+                } else if(led_flipper){
+                    bcm2835_gpio_write(LED, TOGGLE_SWITCH_val);
+                    led_flipper=false;
+                }
             }
             else if (FOOT_SWITCH_val == 0) {
                 bcm2835_delay(100);  //100ms delay for buttons debouncing
-                bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
+                if(!led_flipper){
+                    bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
+                    led_flipper=true;
+                } else if(led_flipper){
+                    bcm2835_gpio_write(LED, FOOT_SWITCH_val);
+                    led_flipper=false;
+                }
             }
 
             printf("\nThis is the end of the if statement\n\n");
