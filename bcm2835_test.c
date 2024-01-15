@@ -80,10 +80,28 @@ int main(int argc, char **argv) {
             TOGGLE_SWITCH_val = bcm2835_gpio_lev(TOGGLE_SWITCH);
             FOOT_SWITCH_val = bcm2835_gpio_lev(FOOT_SWITCH);
             //Light the effect when the footswitch is activated
-            bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
-            bcm2835_gpio_write(LED, !PUSH1_val);
-            bcm2835_gpio_write(LED, !PUSH2_val);
-            bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
+            
+            //bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
+            //bcm2835_gpio_write(LED, !PUSH1_val);
+            //bcm2835_gpio_write(LED, !PUSH2_val);
+            //bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
+
+            if (PUSH2_val == 0) {
+                bcm2835_delay(100);  //100ms delay for buttons debouncing
+                bcm2835_gpio_write(LED, !PUSH2_val);
+            }
+            else if (PUSH1_val == 0) {
+                bcm2835_delay(100);  //100ms delay for buttons debouncing
+                bcm2835_gpio_write(LED, !PUSH1_val);
+            }
+            else if (TOGGLE_SWITCH_val == 0) {
+                bcm2835_delay(100);  //100ms delay for buttons debouncing
+                bcm2835_gpio_write(LED, !TOGGLE_SWITCH_val);
+            }
+            else if (FOOT_SWITCH_val == 0) {
+                bcm2835_delay(100);  //100ms delay for buttons debouncing
+                bcm2835_gpio_write(LED, !FOOT_SWITCH_val);
+            }
 
             printf("\nThis is the end of the if statement\n\n");
         }
